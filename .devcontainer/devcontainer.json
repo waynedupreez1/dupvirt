@@ -4,7 +4,8 @@
         "vscode": {
             "extensions": [
                 "golang.go",
-                "github.vscode-github-actions"
+                "github.vscode-github-actions",
+                "colourafredi.vscode-deepseek"
             ]
         }
     }

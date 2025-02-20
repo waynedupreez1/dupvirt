@@ -1,12 +1,11 @@
 // Handles all of the cli tests
 // Author: Wayne du Preez
-
-package cli
+package entrypoint
 
 import (
     "testing"
-    "github.com/waynedupreez1/duptfy/internal/flags"
-    "github.com/waynedupreez1/duptfy/internal/logger"
+    "dupvirt/internal/flags"
+    "dupvirt/internal/logger"
 )
 
 type MockLogger struct {}

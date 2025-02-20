@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/waynedupreez1/duptfy/internal/logger"
+	"dupvirt/internal/logger"
 )
 
 type MockLogger struct {}

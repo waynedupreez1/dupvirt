@@ -1,3 +1,3 @@
-module github.com/waynedupreez1/duptfy
+module dupvirt
 
 go 1.23.4

@@ -1,9 +1,8 @@
 package main
 
 import (
-	"github.com/waynedupreez1/duptfy/internal/cli"
-	"github.com/waynedupreez1/duptfy/internal/flags"
-	"github.com/waynedupreez1/duptfy/internal/logger"
+	"dupvirt/internal/flags"
+	"dupvirt/internal/logger"
 )
 
 func main() {
@@ -11,7 +10,5 @@ func main() {
 
     flags := flags.Get(log)
 
-    cli := cli.New(log, flags)
-
-    cli.Main()
+    println(flags)
 }

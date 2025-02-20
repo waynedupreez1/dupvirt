@@ -1,16 +1,16 @@
-// This is the meat and potatoes which will run commands and send it 
-// to ntfy
-// Author: Wayne du Preez
-
-package cli
+/* 
+This is the entrypoint of the application
+Author: Wayne du Preez
+*/
+package entrypoint
 
 import (
 	"fmt"
     "strings"
 	"os/exec"
     "net/http"
-	"github.com/waynedupreez1/duptfy/internal/flags"
-	"github.com/waynedupreez1/duptfy/internal/logger"
+	"dupvirt/internal/flags"
+	"dupvirt/internal/logger"
 )
 
 type priority int
