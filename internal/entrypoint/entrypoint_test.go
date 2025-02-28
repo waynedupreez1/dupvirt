@@ -1,10 +1,8 @@
-// Handles all of the cli tests
-// Author: Wayne du Preez
 package entrypoint
 
 import (
     "testing"
-    "dupvirt/internal/flags"
+    "dupvirt/internal/args"
     "dupvirt/internal/logger"
 )
 

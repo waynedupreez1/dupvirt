@@ -1,55 +1,61 @@
-/* 
-This is the entrypoint of the application
+/*Package common
+This contains some common functions
+
 Author: Wayne du Preez
 */
-package entrypoint
+package common
 
 import (
-	"fmt"
-    "strings"
-	"os/exec"
-    "net/http"
-	"dupvirt/internal/flags"
+	"bytes"
 	"dupvirt/internal/logger"
+	"fmt"
+	"net/http"
 )
 
-type priority int
+const Ntfy = "gaming"
+
+type status int
 
 const (
-    low priority = iota
-    high
+    pass status = iota
+    failed
 )
 
-func sendNtfy(ntfyUrl , priority priority, errorMessage string) {
+func sendNtfy(ntfyURL, topic, message, title string, status status, logger logger.ILogger) {
 
-    var comment *strings.Reader    
+    var url = ntfyURL + "/" + topic
+    
+    var comment *bytes.Buffer   
     pri := ""
     emoji := ""
     
-    switch priority {
-        case low:
+    switch status {
+        case pass:
+            if message == "" {
+                comment = bytes.NewBufferString("Succeeded")
+            } else {
+                comment = bytes.NewBufferString(message)
+            }
             pri = "low"
-            comment = strings.NewReader("Succeeded")
             emoji = "+1"
 
-        case high:
-            pri = "high"
-            
-            if len(errorMessage) != 0 {
-                comment = strings.NewReader(errorMessage)
+        case failed:
+            if message == "" {
+                comment = bytes.NewBufferString("Failed")
             } else {
-                comment = strings.NewReader("Failed")
+                comment = bytes.NewBufferString(message)
             }
+            pri = "high"
             emoji = "warning"
     }
     
-    t.logger.Info(fmt.Sprintf("Sent to Server: %s", t.flags.Server.String()))
+    logger.Info(fmt.Sprintf("Sent to Server: %s", url))
 
-    req, err := http.NewRequest("POST", t.flags.Server.String(), comment)
+    req, err := http.NewRequest("POST", url, comment)
     if err != nil {
-        t.logger.Error(fmt.Sprintf("http req failed: %s", err.Error()))
+        logger.Error(fmt.Sprintf("http req failed: %s", err.Error()))
     } else {
-        req.Header.Set("Title", t.flags.Message)
+        req.Header.Set("Title", title)
         req.Header.Set("Priority", pri)
         req.Header.Set("Tags", emoji)
         http.DefaultClient.Do(req)  
