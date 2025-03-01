@@ -10,6 +10,7 @@ import (
 	"dupvirt/internal/logger"
 	"fmt"
 	"net/http"
+    "time"
 )
 
 const Ntfy = "gaming"
@@ -21,7 +22,12 @@ const (
     failed
 )
 
-func sendNtfy(ntfyURL, topic, message, title string, status status, logger logger.ILogger) {
+func sendNtfy(ntfyURL, topic, message, title string, status status, logger logger.ILogger) (*http.Response, error) {
+
+    client := &http.Client{
+        // set the time out
+        Timeout: 5 * time.Second,
+    }
 
     var url = ntfyURL + "/" + topic
     
@@ -53,11 +59,19 @@ func sendNtfy(ntfyURL, topic, message, title string, status status, logger logge
 
     req, err := http.NewRequest("POST", url, comment)
     if err != nil {
-        logger.Error(fmt.Sprintf("http req failed: %s", err.Error()))
-    } else {
-        req.Header.Set("Title", title)
-        req.Header.Set("Priority", pri)
-        req.Header.Set("Tags", emoji)
-        http.DefaultClient.Do(req)  
+        logger.Error(fmt.Sprintf("sendntfy: could not create request: %s\n", err))
+        return nil, err
     }
+
+    req.Header.Set("Title", title)
+    req.Header.Set("Priority", pri)
+    req.Header.Set("Tags", emoji)
+
+    response, err := client.Do(req)  
+    if err != nil {
+        logger.Error(fmt.Sprintf("sendntfy: error making http request: %s\n", err))
+        return nil, err
+    }
+
+    return response, nil
 }

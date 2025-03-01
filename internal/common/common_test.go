@@ -12,10 +12,30 @@ func (t *MockLogger) Info(msg string, keysAndValues ...any)  {}
 func (t *MockLogger) Warn(msg string, keysAndValues ...any)  {}
 func (t *MockLogger) Error(msg string, keysAndValues ...any) {}
 
-func Test_Config_Expect(t *testing.T) {
+func TestSendNtfy_ConfigCorrectUrl_ExpectSendToNtfy(t *testing.T) {
+    /*
+    Here I actually point it to my ntfy server so skip it here
+    */
 
-	var log interface{ logger.ILogger } = &MockLogger{}
-	s := pass
+    t.SkipNow()
+    
+    var log interface{ logger.ILogger } = &MockLogger{}
+    s := pass
 
-	sendNtfy("http://cloud.home.arpa:8050", "Tests", "This is a test", "dubvirt", s, log)
+    res, err := sendNtfy("http://example.com", "Tests", "This is a test", "dubvirt", s, log)
+
+        // Unwrap the error to check if it's a connection refused error
+        // we Expect this else fail    
+    // if err != nil {
+    //     var netErr *net.OpError
+    //     if errors.As(err, &netErr) {
+    //         if netErr.Op == "dial" {
+    //             if netErr.Err.Error() == "connect: connection refused" {
+    //                 return
+    //             }
+    //         }
+    //     }
+    // }
+    t.Log(res)
+    t.Log(err)
 }

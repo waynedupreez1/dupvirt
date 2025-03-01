@@ -6,10 +6,10 @@ Author: Wayne du Preez
 package entrypoint
 
 import (
-	"fmt"
-    "strings"
-	"os/exec"
-    "net/http"
 	"dupvirt/internal/args"
 	"dupvirt/internal/logger"
 )
+
+func Main(logger logger.ILogger, args *args.Inputs) {
+	logger.Info(args.DestinationServer)
+}
