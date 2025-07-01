@@ -11,10 +11,10 @@ import (
 	"log/slog"
 )
 
-// LogLevel allows other packages to use this
+// LogLevel represents the severity of the log message.
 type LogLevel int
 
-// Debug Allows for different loglevels to be used
+// Debug, Info, Warn, and Error are supported log levels.
 const (
     Debug LogLevel = iota
 	Info
@@ -22,7 +22,7 @@ const (
 	Error
 )
 
-// ILogger is the logger interface
+// ILogger defines the logging interface used throughout the application.
 type ILogger interface {
     Debug(msg string, keysAndValues ...any)
     Info(msg string, keysAndValues ...any)
@@ -34,7 +34,7 @@ type slogLogger struct {
     logger *slog.Logger
 }
 
-// New creates a brand new logger
+// New creates a new ILogger with the specified log level.
 func New(logLevel LogLevel) ILogger {    
 
     level := new(slog.LevelVar)

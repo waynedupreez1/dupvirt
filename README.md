@@ -21,3 +21,17 @@ dubvirt -d <-DESTINATION SERVER IP-> -i <-INTERFACE TO MONITOR-> -n <-NOTIFY SER
 <-NOTIFY SERVER HOSTNAME/IP-> = This is the server to send notifications to, leave blank to disable
 <-NOTIFY SERVER TOPIC-> = The topic to send the nnotification to, leave blank to disable
 ```
+
+# Tasks
+## Test
+Runs All Tests
+```
+go test ./...
+```
+
+## Build
+Build Application add to output folder
+```
+mkdir -p output
+go build -o output/dubvirt ./cmd/dupvirt
+```
